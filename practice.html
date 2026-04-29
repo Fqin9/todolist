@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fqin's-todolist</title>
+    <style>
+        body {
+            background-color: lightgray;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1 {
+            color: aqua;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+            margin-left: 8px;
+        }
+
+        button {
+            padding: 8px 15px;
+            font-size: 16px;
+            margin-left: 8px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+        }
+
+        li {
+            list-style: none;
+            margin: 8px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        li button.del {
+            background: none;
+            color: red;
+            margin-left: auto;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+
+        li button.complete {
+            background: none;
+            color: green;
+            margin-right: 8px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>fqin的todolist</h1>
+    <input>
+    <button>添加</button>
+    <ul>
+    </ul>
+    <script>
+        //通过代码实现button，input，ul的功能
+        //1.获取元素 2.创建新元素 3.将输入文字添加到新元素
+        //4.将新元素添加到ul中 5.清空输入框
+
+        //获取元素
+        let botton = document.querySelector('button');
+        let input = document.querySelector('input');
+        let list = document.querySelector('ul');
+
+        console.log(botton, input, list);
+
+        //给button添加点击事件监听  
+        //enter键也可以添加事件
+        input.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                botton.click();
+            }
+        })
+
+        botton.addEventListener('click', function () {
+
+            //防止添加空事件，进行if判断
+            if (input.value === '') {
+                return;
+            }
+
+            let item = document.createElement('li')
+
+            //添加删除代办事项的功能
+
+            //首先把代办事项单独存放
+            let textSpan = document.createElement('span');
+            textSpan.textContent = input.value;
+
+            //在左边添加上完成按钮
+            let completebotton = document.createElement('button');
+            completebotton.className = 'complete';
+            completebotton.textContent = '√';
+            completebotton.addEventListener('click', function () {
+                textSpan.style.textDecoration = 'line-through';
+            })
+
+            //添加删除按钮
+            let delbotton = document.createElement('button');
+            delbotton.className = 'del';
+            delbotton.textContent = '×';
+            delbotton.addEventListener('click', function () {
+                list.removeChild(item);
+            })
+
+            //在li中添加完成，删除，span三种元素
+            item.appendChild(completebotton);
+            item.appendChild(textSpan);
+            item.appendChild(delbotton);
+            list.appendChild(item);
+            input.value = '';
+        })
+    </script>
+</body>
+
+</html>
